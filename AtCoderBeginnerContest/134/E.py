@@ -1,23 +1,21 @@
+"""
+提出 #6475942 を参考に作成
+"""
+
+import bisect
 
 
 def solve():
     N = int(input())
     A = [int(input()) for _ in range(N)]
-    color_list = [-1]
-    min_A = min(color_list)
-    for a in A:
-        if min_A < a:
-            for i in range(len(color_list)):
-                tag = color_list[i]
-                if tag < a:
-                    color_list[i] = a
-                    if tag == min_A:
-                        min_A = min(color_list)
-                    break
-        else:
+    color_list = [A[-1]]
+    for a in reversed(A[:-1]):
+        # a より大きい数の中で一番小さい数の場所を取得する
+        c = bisect.bisect_left(color_list, a + 1)
+        if c == len(color_list):
             color_list.append(a)
-            min_A = a
-    # print(color_list)
+        else:
+            color_list[c] = a
     print(len(color_list))
 
 
