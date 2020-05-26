@@ -3,9 +3,20 @@ Common Function
 """
 
 
-def combinations_count(n, r):
+def cmb(n, r):
     import math
     return math.factorial(n) // (math.factorial(n - r) * math.factorial(r))
+
+
+def cmb2(n, r, mod):
+    re = 1
+    for i in range(1, n + 1):
+        re = (re * i) % mod
+    for i in range(1, n - r + 1):
+        re = (re * inverse(i, mod)) % mod
+    for i in range(1, r + 1):
+        re = (re * inverse(i, mod)) % mod
+    return re % mod
 
 
 def ppprint(itr_obj):
@@ -41,7 +52,7 @@ def inverse_comment(a, p):
     # ax + py = 1
     a_, p_ = a, p
     x, y = 1, 0
-    # ここのループの仕組みがいまいち理解できていない.
+    # todo: ここのループの仕組みがいまいち理解できていない.
     # ext_gcd で 解(x, y)を求める仕組みに似ているが, a, pの遡及の向きが逆になってない？
     # なぜこれで正しい解になるのかよくわからん
     while p_:
@@ -88,5 +99,11 @@ def ext_gcd(a, b, x=0, y=0):
 
 
 if __name__ == '__main__':
-    a = 12345678900000 % (10 ** 9 + 7)
-    print(a * inverse(100000, 10 ** 9 + 7) % (10 ** 9 + 7))
+    # a = 12345678900000 % (10 ** 9 + 7)
+    # print(a * inverse(100000, 10 ** 9 + 7) % (10 ** 9 + 7))
+    import time
+    t = time.time()
+    print(cmb(200000, 100000) % (10 ** 9 + 7))
+    print(time.time() - t)
+    print(cmb2(200000, 100000, 10 ** 9 + 7))
+    print(time.time() - t)
