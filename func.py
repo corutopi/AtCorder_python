@@ -98,12 +98,18 @@ def ext_gcd(a, b, x=0, y=0):
     return t, s - a // b * t
 
 
+def divisor(x):
+    from math import floor
+    re = []
+    _x = floor(x ** 0.5)
+    for i in range(1, _x + 1):
+        if x % i == 0:
+            re.append(i)
+            if x // i != i:
+                re.append(x // i)
+    re.sort()
+    return re
+
+
 if __name__ == '__main__':
-    # a = 12345678900000 % (10 ** 9 + 7)
-    # print(a * inverse(100000, 10 ** 9 + 7) % (10 ** 9 + 7))
-    import time
-    t = time.time()
-    print(cmb(200000, 100000) % (10 ** 9 + 7))
-    print(time.time() - t)
-    print(cmb2(200000, 100000, 10 ** 9 + 7))
-    print(time.time() - t)
+    print(divisor(100000))
