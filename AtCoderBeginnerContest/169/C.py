@@ -9,4 +9,4 @@ def solve(A, B):
 if __name__ == '__main__':
     A, B = [float(i) for i in input().split()]
     A = int(A)
-    sorted(A, B)
+    solve(A, B)
