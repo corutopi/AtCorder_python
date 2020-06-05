@@ -5,6 +5,8 @@ Common Function
 
 def cmb(n, r):
     import math
+    if n < r:
+        return 0
     return math.factorial(n) // (math.factorial(n - r) * math.factorial(r))
 
 
@@ -112,4 +114,4 @@ def divisor(x):
 
 
 if __name__ == '__main__':
-    print(divisor(100000))
+    print(cmb(1, 2))
