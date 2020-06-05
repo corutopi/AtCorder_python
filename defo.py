@@ -1,7 +1,9 @@
+from decorator import stop_watch
 
 
+@stop_watch
 def solve():
-    S = input()
+    S = 'aaa'
     for s in list(S):
         if S.count(s) != 2:
             print('No')
@@ -10,4 +12,9 @@ def solve():
 
 
 if __name__ == '__main__':
+    # S = input()
+    # N = int(input())
+    # N, M = map(int, input().split())
+    # As = [int(i) for i in input().split()]
+    # Bs = [int(i) for i in input().split()]
     solve()
