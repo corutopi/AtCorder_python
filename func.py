@@ -21,17 +21,6 @@ def cmb2(n, r, mod):
     return re % mod
 
 
-def cmb4(n, r, mod):
-    if n < r:
-        return 0
-    re = 1
-    for i in range(n - r + 1, n + 1):
-        re = re * i
-    for i in range(1, r + 1):
-        re = re // i
-    return re
-
-
 def ppprint(itr_obj):
     if len(itr_obj) == 0:
         print('non list', itr_obj)
@@ -127,4 +116,3 @@ def divisor(x):
 if __name__ == '__main__':
     print(cmb(10000, 2000))
     print(cmb2(10000, 2000, 10 ** 9 + 7))
-    print(cmb3(10000, 2000, 10 ** 9 + 7))
