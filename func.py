@@ -4,6 +4,7 @@ Common Function
 
 
 def cmb(n, r):
+    """組み合わせ"""
     import math
     if n < r:
         return 0
@@ -11,6 +12,7 @@ def cmb(n, r):
 
 
 def cmb2(n, r, mod):
+    """組み合わせ(余り)"""
     if n < r:
         return 0
     re = 1
@@ -46,6 +48,7 @@ def make_test_graph_data(node, edge, is_directed=False):
 
 
 def inverse_comment(a, p):
+    """逆元(コメント付き)"""
     # b / a を計算する時の, mod p における b の逆元 x を拡張ユークリッド互除法で計算する.
     # b / a ≡ b * (1 / a) (mod p)
     # a ** -1 ≡ x (mod p)
@@ -69,6 +72,7 @@ def inverse_comment(a, p):
 
 
 def inverse(a, p):
+    """逆元"""
     a_, p_ = a, p
     x, y = 1, 0
     while p_:
@@ -89,7 +93,7 @@ def ext_gcd(a, b, x=0, y=0):
     # 変形後の式をさらに同様に変形していく.
     # 変形後の式を qx + ry = d と一般化し, q = d, r = 0 と なるまで変形する.
     # この時の解は明らかに x = 1, y = 0 なので, これを変形前の式に適用して変形前の式の解(x,y)を求める.
-    # 変形後の式の解を x = s, y = t とすると, 変形前の式の解以下のようになる.
+    # 変形後の式の解を x = s, y = t とすると, 変形前の式の解は以下のようになる.
     # ①の形から,
     #     s = ix + y, t = x
     #     ===> x = t, y = s - ix
@@ -101,6 +105,7 @@ def ext_gcd(a, b, x=0, y=0):
 
 
 def divisor(x):
+    """約数"""
     from math import floor
     re = []
     _x = floor(x ** 0.5)
@@ -113,6 +118,32 @@ def divisor(x):
     return re
 
 
+def prime_factorization(x):
+    """素因数分解"""
+    re = []
+    i = 2
+    while x != 1:
+        if x % i == 0:
+            re.append(i)
+            x //= i
+        else:
+            i += 1
+    return re
+
+
+def lcm(a, b):
+    """最小公倍数"""
+    from math import gcd
+    return (a * b) // gcd(a, b)
+
+
+def gcd(a, b):
+    """最大公約数"""
+    a, b = (a, b) if a >= b else (b, a)
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
 if __name__ == '__main__':
-    print(cmb(10000, 2000))
-    print(cmb2(10000, 2000, 10 ** 9 + 7))
+    print(gcd(36, 8))
