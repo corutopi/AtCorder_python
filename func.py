@@ -145,5 +145,16 @@ def gcd(a, b):
     return gcd(b, a % b)
 
 
+def random_str(length, choice=''):
+    """指定の長さのランダム英数文字列"""
+    if choice == '':
+        choice = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + \
+                 'abcdefghijklmnopqrstuvwxyz' + \
+                 '0123456789'
+    from random import randint
+    return ''.join(choice[randint(0, len(choice) - 1)] for _ in range(length))
+
+
 if __name__ == '__main__':
-    print(gcd(36, 8))
+    # print(gcd(36, 8))
+    print(random_str(10, 'abc'))
