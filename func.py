@@ -2,6 +2,8 @@
 Common Function
 """
 
+from decorator import stop_watch
+
 
 def cmb(n, r):
     """組み合わせ"""
@@ -147,14 +149,29 @@ def gcd(a, b):
 
 def random_str(length, choice=''):
     """指定の長さのランダム英数文字列"""
+    from random import randint, choices
+    import string
     if choice == '':
-        choice = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + \
-                 'abcdefghijklmnopqrstuvwxyz' + \
-                 '0123456789'
-    from random import randint
-    return ''.join(choice[randint(0, len(choice) - 1)] for _ in range(length))
+        choice = string.ascii_letters + string.digits
+    return ''.join(choices(choice, k=length))
+
+
+@stop_watch
+def prime_numbers(m):
+    re = []
+    first_prime = [0] * (m + 1)
+    if m <= 1:
+        return re
+    for i in range(2, m + 1):
+        if first_prime[i] > 0:
+            continue
+        re.append(i)
+        for j in range(i * i, m + 1, i):
+            first_prime[j] = i
+    return re
 
 
 if __name__ == '__main__':
     # print(gcd(36, 8))
-    print(random_str(10, 'abc'))
+    print(random_str(10))
+    # print(prime_numbers(1000))
