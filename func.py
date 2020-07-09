@@ -87,6 +87,11 @@ def inverse(a, p):
     return x
 
 
+def dev_mod(a, b, mod):
+    """a(= A % mod) / b を mod で割った余り"""
+    return (a * inverse(b, mod)) % mod
+
+
 def ext_gcd(a, b, x=0, y=0):
     # ax + by = gcd(a, b) の整数解を決める.
     # a = ib + r とすると,
@@ -172,6 +177,9 @@ def prime_numbers(m):
 
 
 if __name__ == '__main__':
+    mod = 10 ** 9 + 7
     # print(gcd(36, 8))
     print(random_str(10))
     # print(prime_numbers(1000))
+    print((12345678900000 * inverse(100000, 10 ** 9 + 7)) % (10 ** 9 + 7))
+    print((12345678900000 % mod) * inverse(100000, mod) % mod)
