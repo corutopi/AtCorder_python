@@ -127,6 +127,7 @@ def divisor(x):
 
 def prime_factorization(x):
     """素因数分解"""
+    import math
     re = []
     i = 2
     while x != 1:
@@ -135,6 +136,9 @@ def prime_factorization(x):
             x //= i
         else:
             i += 1
+            if i > math.sqrt(x):
+                re.append(x)
+                break
     return re
 
 
