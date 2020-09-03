@@ -167,6 +167,7 @@ def random_str(length, choice=''):
 
 @stop_watch
 def prime_numbers(m):
+    """m以下の素数リスト"""
     re = []
     first_prime = [0] * (m + 1)
     if m <= 1:
@@ -180,6 +181,16 @@ def prime_numbers(m):
     return re
 
 
+def binary_search(ok, ng, solve):
+    """2分探索"""
+    while abs(ok - ng) > 1:
+        mid = (ok + ng) // 2
+        if solve(mid):
+            ok = mid
+        else:
+            ng = mid
+
+
 if __name__ == '__main__':
     mod = 10 ** 9 + 7
     # print(gcd(36, 8))
@@ -187,3 +198,4 @@ if __name__ == '__main__':
     # print(prime_numbers(1000))
     print((12345678900000 * inverse(100000, 10 ** 9 + 7)) % (10 ** 9 + 7))
     print((12345678900000 % mod) * inverse(100000, mod) % mod)
+    print(prime_numbers(10000000))
