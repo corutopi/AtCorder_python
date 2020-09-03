@@ -1,18 +1,25 @@
-def solve():
-    L, R = map(int, input().split())
-    if L + 2019 <= R:
-        print(0)
-    elif L % 2019 > R % 2019:
-        print(0)
-    else:
-        l = L % 2019
-        r = R % 2019
-        min_mod = 2019
-        for i in range(l, r):
-            for j in range(i + 1, r + 1):
-                min_mod = min(min_mod, (i * j) % 2019)
-        print(min_mod)
+# 解説を参考に作成
+# import sys
+# sys.setrecursionlimit(10 ** 6)
+# import bisect
+# from collections import deque
+# from decorator import stop_watch
+#
+#
+# @stop_watch
+def solve(N, As):
+    S = sum(As)
+    Xs = [0] * N
+    Xs[0] = S - (sum(As[1::2]) * 2)
+    for i in range(1, N):
+        Xs[i] = 2 * As[i - 1] - Xs[i - 1]
+    print(' '.join([str(i) for i in Xs]))
 
 
 if __name__ == '__main__':
-    solve()
+    # S = input()
+    N = int(input())
+    # N, M = map(int, input().split())
+    As = [int(i) for i in input().split()]
+    # Bs = [int(i) for i in input().split()]
+    solve(N, As)
