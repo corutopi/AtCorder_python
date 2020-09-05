@@ -23,3 +23,8 @@ if __name__ == '__main__':
     # Bi = [int(i) for i in input().split()]
     # ABi = [[int(i) for i in input().split()] for _ in range(N)]
     solve()
+
+    # # test
+    # from random import randint
+    # from func import random_str
+    # solve()
