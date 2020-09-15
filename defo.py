@@ -19,9 +19,9 @@ if __name__ == '__main__':
     # S = input()
     # N = int(input())
     # N, M = map(int, input().split())
-    # Ai = [int(i) for i in input().split()]
-    # Bi = [int(i) for i in input().split()]
-    # ABi = [[int(i) for i in input().split()] for _ in range(N)]
+    # A = [int(i) for i in input().split()]
+    # B = [int(i) for i in input().split()]
+    # AB = [[int(i) for i in input().split()] for _ in range(N)]
     solve()
 
     # # test
