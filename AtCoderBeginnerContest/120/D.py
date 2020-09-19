@@ -1,31 +1,90 @@
+# 解説を参考に作成
 """
 D - Decayed Bridges
 """
 
 
-def solve():
-    N, M = map(int, input().split())
-    island = [[n for n in range(1, N + 1)]]
-    bridge = [list(map(int, input().split())) for i in range(M)]
-    for m in range(M):
-        lost_bridge = bridge.pop(0)
-        # 崩壊した橋のある島グループを探す
-        is_group = [island.pop(i) for i in range(len(island)) if
-                    lost_bridge[0] in island[i]][0]
-        # 島グループの検索を行い, 必要に応じて分断する
-        group_1 = break_up_island(is_group[0], bridge)
-        group_2 = [i for i in is_group if i not in group_1]
+class UnionFind():
+    # 下記から拝借
+    # https://note.nkmk.me/python-union-find/
+    def __init__(self, n):
+        self.n = n
+        self.parents = [-1] * n
 
-        # 島グループから不便さを求める
-        # ただし島グループが一つのみの場合は0とする
+    def find(self, x):
+        if self.parents[x] < 0:
+            return x
+        else:
+            self.parents[x] = self.find(self.parents[x])
+            return self.parents[x]
+
+    def union(self, x, y):
+        x = self.find(x)
+        y = self.find(y)
+
+        if x == y:
+            return
+
+        if self.parents[x] > self.parents[y]:
+            x, y = y, x
+
+        self.parents[x] += self.parents[y]
+        self.parents[y] = x
+
+    def size(self, x):
+        return -self.parents[self.find(x)]
+
+    def same(self, x, y):
+        return self.find(x) == self.find(y)
+
+    def members(self, x):
+        root = self.find(x)
+        return [i for i in range(self.n) if self.find(i) == root]
+
+    def roots(self):
+        return [i for i, x in enumerate(self.parents) if x < 0]
+
+    def group_count(self):
+        return len(self.roots())
+
+    def all_group_members(self):
+        return {r: self.members(r) for r in self.roots()}
+
+    def __str__(self):
+        return '\n'.join(
+            '{}: {}'.format(r, self.members(r)) for r in self.roots())
 
 
-def break_up_island(island, bridge):
-    target = [island]
-    for b in [b[1] for b in bridge if b[0] == island]:
-        target += break_up_island(b, bridge)
-    return target
+# import sys
+# sys.setrecursionlimit(10 ** 6)
+# import bisect
+# from collections import deque
+# from decorator import stop_watch
+#
+#
+# @stop_watch
+def solve(N, M, AB):
+    AB = AB[::-1]
+    AB = [[ab[0] - 1, ab[1] - 1] for ab in AB]
+    un = UnionFind(N)
+    ans = [N * (N - 1) // 2]
+    for a, b in AB:
+        if un.same(a, b):
+            ans.append(ans[-1])
+            continue
+        ans.append(ans[-1] - (un.size(a) * un.size(b)))
+        un.union(a, b)
+    ans.reverse()
+    for a in ans[1:]:
+        print(a)
 
 
 if __name__ == '__main__':
-    solve()
+    N, M = map(int, input().split())
+    AB = [[int(i) for i in input().split()] for _ in range(M)]
+    solve(N, M, AB)
+
+    # # test
+    # from random import randint
+    # from func import random_str
+    # solve()
