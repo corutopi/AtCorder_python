@@ -20,13 +20,13 @@ def solve(N, M, PY):
 
 
 if __name__ == '__main__':
-    # N, M = map(int, input().split())
-    # PY = [[int(i) for i in input().split()] for _ in range(M)]
-    # solve(N, M, PY)
-
-    # test
-    from random import randint, sample
-    from func import random_str
-    N, M = 10 ** 5, 10 ** 5
-    PY = sample([[randint(1, 5), 10 ** 8 - i] for i in range(M)], M)
+    N, M = map(int, input().split())
+    PY = [[int(i) for i in input().split()] for _ in range(M)]
     solve(N, M, PY)
+
+    # # test
+    # from random import randint, sample
+    # from func import random_str
+    # N, M = 10 ** 5, 10 ** 5
+    # PY = sample([[randint(1, 5), 10 ** 8 - i] for i in range(M)], M)
+    # solve(N, M, PY)
