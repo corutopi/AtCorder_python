@@ -1,22 +1,51 @@
+# 解説を参考に作成
+# import sys
+# sys.setrecursionlimit(10 ** 6)
+# import bisect
+# from collections import deque
 
-def solve():
-    N = int(input())
-    # すべてのAの約数を求める.
-    all_divisor = {1}
-    divisors = [1] * N
-    for i, Ai in enumerate([int(i) for i in input().split()]):
-        divisors[i] = get_divisors(Ai)
-        pass
-    # # この時すべての数の約数の種類を記録しておく
-    # 約数の数が N - 1 以下となる数を探す.
-    pass
+def gcd(a, b):
+    """最大公約数"""
+    a, b = (a, b) if a >= b else (b, a)
+    if b == 0:
+        return a
+    return gcd(b, a % b)
 
 
-def get_divisors(Ai, x=1, now_result=[1]):
-    result = now_result
-    for i
-    pass
+# from decorator import stop_watch
+#
+#
+# @stop_watch
+def solve(N, A):
+    L = [0] * N
+    L[0] = A[0]
+    for i in range(1, N):
+        L[i] = gcd(A[i], L[i - 1])
+    R = [0] * N
+    R[-1] = A[-1]
+    for i in range(1, N):
+        R[-(i + 1)] = gcd(A[-(i + 1)], R[-i])
+    ans = 0
+    for i in range(N):
+        if i == 0:
+            ans = max(ans, R[i + 1])
+        elif i == N - 1:
+            ans = max(ans, L[i - 1])
+        else:
+            ans = max(ans, gcd(L[i - 1], R[i + 1]))
+    print(ans)
 
 
 if __name__ == '__main__':
-    solve()
+    # S = input()
+    N = int(input())
+    # N, M = map(int, input().split())
+    A = [int(i) for i in input().split()]
+    # B = [int(i) for i in input().split()]
+    # AB = [[int(i) for i in input().split()] for _ in range(N)]
+    solve(N, A)
+
+    # # test
+    # from random import randint
+    # from func import random_str
+    # solve()
