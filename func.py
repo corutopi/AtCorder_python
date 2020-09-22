@@ -10,6 +10,7 @@ class UnionFind():
     下記から拝借
     https://note.nkmk.me/python-union-find/
     """
+
     def __init__(self, n):
         self.n = n
         self.parents = [-1] * n
@@ -219,6 +220,38 @@ def random_str(length, choice=''):
     return ''.join(choices(choice, k=length))
 
 
+def random_ints(num, min, max, duplicate=True, sort=False):
+    import random
+    import warnings
+    ERROR_DOMAIN_NARROW = 'domain error: too narrow domain(min - max) and can\'t take a unique value.'
+    WARN_MANY_ELEMENTS = 'too many elements warning: too many elements and it may take a lot of memory.'
+    WARN_DOMAIN_NARROW = 'domain of narrow warning: too narrow domain(min - max) and it may take many time of process.'
+    element_num = max - min + 1
+
+    if duplicate:
+        re = [random.randint(min, max) for _ in range(num)]
+    else:
+        if num > element_num:
+            raise ValueError(ERROR_DOMAIN_NARROW)
+        if element_num >= 10 ** 8:
+            warnings.warn(WARN_MANY_ELEMENTS, stacklevel=2)
+        if num >= 10 ** 6 and element_num / num < 2:
+            warnings.warn(WARN_DOMAIN_NARROW, stacklevel=2)
+
+        check = [0] * element_num
+        cnt = 0
+        re = []
+        while cnt < num:
+            tmp = random.randint(min, max)
+            if check[tmp - min] == 0:
+                check[tmp - min] = 1
+                cnt += 1
+                re.append(tmp)
+    if sort:
+        re.sort()
+    return re
+
+
 @stop_watch
 def prime_numbers(m):
     """m以下の素数リスト"""
@@ -246,12 +279,4 @@ def binary_search(ok, ng, solve):
 
 
 if __name__ == '__main__':
-    mod = 10 ** 9 + 7
-    # print(gcd(36, 8))
-    print(random_str(10))
-    # print(prime_numbers(1000))
-    # print((12345678900000 * inverse(100000, 10 ** 9 + 7)) % (10 ** 9 + 7))
-    # print((12345678900000 % mod) * inverse(100000, mod) % mod)
-    # print(prime_numbers(10000000))
-    print(cmb(2, 0))
-    print(random_str(10))
+    print(random_ints(int(10 ** 6 * 6), 1, 10 ** 7, duplicate=False))
