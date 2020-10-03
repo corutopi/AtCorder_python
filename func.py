@@ -60,7 +60,9 @@ class UnionFind():
 
 
 class FermatCmb:
-    """フェルマー小定理を使用した順列, 組み合わせ計算"""
+    """フェルマー小定理を使用した順列, 組み合わせ計算
+    max_num = 10 ** 6 で 0.58 sec
+    """
 
     def __init__(self, max_num, mod):
         """
