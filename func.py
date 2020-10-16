@@ -5,7 +5,60 @@ Common Function
 from decorator import stop_watch
 
 
-class UnionFind():
+class BinaryIndexedTree:
+    """
+    l = [1, 2, 3, 4, 5, 6, 7, 8] のlistを例とした場合、
+    以下のような範囲での演算結果(sum)を配列に持つ。
+        1: [1, 2, 3, 4, 5, 6, 7, 8]
+        2: [1, 2, 3, 4]
+        3: [1, 2]      [5, 6]
+        4: [1]   [3]   [5]   [7]
+    1 ～ r までの結果S(r)を、各層で必要な演算済みのデータを使うことで log(N) で計算できる.
+    l ～ r までの結果は S(r) - S(l - 1) で同じくlog(N)計算できる.
+    データ構造の作成は N*log(N).
+    配列データは1始まりとして計算.
+    """
+
+    def __init__(self, n):
+        """
+        :param n: num of date.
+        """
+        self.num = n
+        self.tree = [0] * (n + 1)
+
+    def add(self, k, x):
+        """
+        :param k: [1, self.num]
+        :param x: add num.
+        :return: None
+        """
+        while k <= self.num:
+            self.tree[k] += x
+            k += k & -k
+
+    def sum(self, k):
+        """
+        1 ～ k までの合計
+        :param k:
+        :return:
+        """
+        re = 0
+        while k > 0:
+            re += self.tree[k]
+            k -= k & -k
+        return re
+
+    def sum_lr(self, l, r):
+        """
+        sum of form l to r
+        :param l: 1 <= l <= r
+        :param r: l <= r <= self.num
+        :return:
+        """
+        return self.sum(r) - self.sum(l - 1)
+
+
+class UnionFind:
     """
     下記から拝借
     https://note.nkmk.me/python-union-find/
@@ -104,6 +157,7 @@ class SegTree:
     ------------------
     同じ番号の列すべての func 結果を配列に持つ
     """
+
     def __init__(self, elm, func, default):
         """
         :param elm: 配列
