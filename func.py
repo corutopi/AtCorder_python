@@ -17,6 +17,8 @@ class BinaryIndexedTree:
     l ～ r までの結果は S(r) - S(l - 1) で同じくlog(N)計算できる.
     データ構造の作成は N*log(N).
     配列データは1始まりとして計算.
+    長さ n + 1 (0 ~ n) の配列にデータを持ち, データ内の対象要素を l ~ r とすると, 配列の r 番目が格納先となる.
+    また対象要素の数は r の LSB(Least Significant Bit) に一致する.
     """
 
     def __init__(self, n):
@@ -421,6 +423,7 @@ def binary_search(ok, ng, solve):
             ok = mid
         else:
             ng = mid
+    return ok
 
 
 if __name__ == '__main__':
