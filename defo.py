@@ -26,5 +26,5 @@ if __name__ == '__main__':
 
     # # test
     # from random import randint
-    # from func import random_str
+    # from func import random_str, random_ints
     # solve()
