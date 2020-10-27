@@ -427,4 +427,5 @@ def binary_search(ok, ng, solve):
 
 
 if __name__ == '__main__':
-    print(random_ints(int(10 ** 6 * 6), 1, 10 ** 7, duplicate=False))
+    for _ in range(1000):
+        print(random_ints(2, 1, 10 ** 7, duplicate=False))
