@@ -26,7 +26,7 @@ def solve(N, K, P, C):
     # グループ毎に最大値を計算
     ans = -(10 ** 10)
     for g in groups:
-        # # メンバー数(num), 1ループ分の合計(sum), 1 ~ num回移動する場合のそれぞれの最大値(max[i]), を求める
+        # # メンバー数(num), 1ループ分の合計(all_sum), 1 ~ num回移動する場合のそれぞれの最大値(max[i]), を求める
         num = len(g)
         all_sum = sum(g)
         g += g
@@ -39,7 +39,7 @@ def solve(N, K, P, C):
             for j in range(num):
                 t = max(t, tmp_sum[j + i] - tmp_sum[j])
             move_sum.append(t)
-        # # sum <= 0 の場合, max[i] の最大値
+        # # sum <= 0 の場合, max[i(1 <= i <= K)] の最大値
         tmp_ans = 0
         if all_sum <= 0:
             tmp_ans = max(move_sum[1:K + 1])
@@ -47,7 +47,8 @@ def solve(N, K, P, C):
             d, m = divmod(K, num)
             tmp_ans += all_sum * d
             if d > 0:
-                # # K >= num の場合, 可能な限りループ + 残ったn回移動する場合の最大値 or 可能な限り-1ループ + max[i]の最大値
+                # # K >= num の場合, 可能な限りループ + 余りをnとして0 ～ n回移動する場合の最大値
+                # # or 可能な限り-1ループ + max[i(0 <= i <= K)]の最大値
                 tmp_ans = max(all_sum * d + max(move_sum[:m + 1]),
                               all_sum * (d - 1) + max(move_sum))
             else:
