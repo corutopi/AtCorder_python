@@ -22,6 +22,7 @@ if __name__ == '__main__':
     # A = [int(i) for i in input().split()]
     # B = [int(i) for i in input().split()]
     # AB = [[int(i) for i in input().split()] for _ in range(N)]
+    # P = [int(input()) for _ in range(N)]
     solve()
 
     # # test
