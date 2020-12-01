@@ -13,8 +13,6 @@ def solve(N, A):
         xor_cs.append(xor_cs[-1] ^ a)
         sum_cs.append(sum_cs[-1] + a)
     l, r = 1, 1
-    exist_flg = True
-    end_flg = False
     ans = 0
     while l <= N:
         if r < N:
