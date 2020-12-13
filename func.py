@@ -178,7 +178,21 @@ class SegTree:
         for i in range(self.num - 1, 0, -1):
             self.tree[i] = self.func(self.tree[i * 2], self.tree[i * 2 + 1])
 
+    def element(self, k):
+        """
+        要素の取得
+        :param k: elm の要素番号
+        :return:
+        """
+        return self.tree[self.num + k]
+
     def update(self, k, x):
+        """
+        要素k の値を x に更新する
+        :param k:
+        :param x:
+        :return:
+        """
         k = self.num + k
         self.tree[k] = x
         while k > 1:
@@ -188,7 +202,7 @@ class SegTree:
     def query(self, l, r):
         """
         [l, r) の結果を取得する
-        :param l:
+        :param l: 0 始まりで指定する
         :param r:
         :return:
         """
