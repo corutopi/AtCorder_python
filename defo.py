@@ -2,6 +2,8 @@
 # sys.setrecursionlimit(10 ** 6)
 # import bisect
 # from collections import deque
+mod = 10 ** 9 + 7
+
 from decorator import stop_watch
 
 
