@@ -2,6 +2,7 @@
 # sys.setrecursionlimit(10 ** 6)
 # import bisect
 # from collections import deque
+inf = float('inf')
 mod = 10 ** 9 + 7
 
 from decorator import stop_watch
