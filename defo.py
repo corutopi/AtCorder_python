@@ -28,7 +28,8 @@ if __name__ == '__main__':
     # P = [int(input()) for _ in range(N)]
     solve()
 
-    # # test
-    # from random import randint
-    # from func import random_str, random_ints
-    # solve()
+    # test
+    from random import randint
+    import tool.testcase as tt
+    from tool.testcase import random_str, random_ints
+    solve()
