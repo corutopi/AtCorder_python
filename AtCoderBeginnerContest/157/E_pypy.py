@@ -1,56 +1,9 @@
-class BinaryIndexedTree:
-    """
-    l = [1, 2, 3, 4, 5, 6, 7, 8] のlistを例とした場合、
-    以下のような範囲での演算結果(sum)を配列に持つ。
-        1: [1, 2, 3, 4, 5, 6, 7, 8]
-        2: [1, 2, 3, 4]
-        3: [1, 2]      [5, 6]
-        4: [1]   [3]   [5]   [7]
-    1 ～ r までの結果S(r)を、各層で必要な演算済みのデータを使うことで log(N) で計算できる.
-    l ～ r までの結果は S(r) - S(l - 1) で同じくlog(N)計算できる.
-    データ構造の作成は N*log(N).
-    配列データは1始まりとして計算.
-    長さ n + 1 (0 ~ n) の配列にデータを持ち, データ内の対象要素を l ~ r とすると, 配列の r 番目が格納先となる.
-    また対象要素の数は r の LSB(Least Significant Bit) に一致する.
-    """
-
-    def __init__(self, n):
-        """
-        :param n: num of date.
-        """
-        self.num = n
-        self.tree = [0] * (n + 1)
-
-    def add(self, k, x):
-        """
-        :param k: [1, self.num]
-        :param x: add num.
-        :return: None
-        """
-        while k <= self.num:
-            self.tree[k] += x
-            k += k & -k
-
-    def sum(self, k):
-        """
-        1 ～ k までの合計
-        :param k:
-        :return:
-        """
-        re = 0
-        while k > 0:
-            re += self.tree[k]
-            k -= k & -k
-        return re
-
-    def sum_lr(self, l, r):
-        """
-        sum of form l to r
-        :param l: 1 <= l <= r
-        :param r: l <= r <= self.num
-        :return:
-        """
-        return self.sum(r) - self.sum(l - 1)
+# import sys
+# sys.setrecursionlimit(10 ** 6)
+# import bisect
+# from collections import deque
+inf = float('inf')
+mod = 10 ** 9 + 7
 
 
 class SegTree:
@@ -126,3 +79,54 @@ class SegTree:
             l >>= 1
             r >>= 1
         return res
+
+
+# from decorator import stop_watch
+#
+#
+# @stop_watch
+def solve(N, S, Q, Query):
+    SS = [set([s]) for s in S]
+    segtree = SegTree(SS, lambda x, y: x.union(y), set())
+    for a, b, c in Query:
+        if a == 1:
+            segtree.update(b - 1, {c})
+        else:
+            print(len(segtree.query(b - 1, c)))
+
+
+if __name__ == '__main__':
+    N = int(input())
+    S = input()
+    Q = int(input())
+    Query = [input().split() for _ in range(Q)]
+    for q in Query:
+        q[0] = int(q[0])
+        if q[0] == 1:
+            q[1] = int(q[1])
+        else:
+            q[1] = int(q[1])
+            q[2] = int(q[2])
+    solve(N, S, Q, Query)
+
+    # # test
+    # from random import randint
+    # import string
+    # import tool.testcase as tt
+    # from tool.testcase import random_str, random_ints
+    #
+    # N = 5 * 10 ** 5
+    # S = random_str(N, string.ascii_lowercase)
+    # Q = 20000
+    # Query = []
+    # for _ in range(Q):
+    #     a = randint(1, 2)
+    #     if a == 1:
+    #         b = randint(1, N)
+    #         c = random_str(1, string.ascii_lowercase)
+    #     else:
+    #         b = randint(1, N)
+    #         c = randint(1, N)
+    #         b, c = min(b, c), max(b, c)
+    #     Query.append([a, b, c])
+    # solve(N, S, Q, Query)

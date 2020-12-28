@@ -30,6 +30,7 @@ if __name__ == '__main__':
 
     # # test
     # from random import randint
+    # import string
     # import tool.testcase as tt
     # from tool.testcase import random_str, random_ints
     # solve()
