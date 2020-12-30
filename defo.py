@@ -4,6 +4,7 @@
 # from collections import deque
 inf = float('inf')
 mod = 10 ** 9 + 7
+mod2 = 998244353
 
 from decorator import stop_watch
 
