@@ -69,3 +69,32 @@ def make_test_graph_data(node, edge, is_directed=False):
         re.append(new)
         count += 1
     return re
+
+
+def make_tree_data(node_num, max_child=5, start=1):
+    """
+    簡単な tree を返す.
+    :param node_num: 頂点数
+    :param max_child: 1頂点当たりの最大子数
+    :param start: 頂点の開始番号. start ~ start + node_num - 1 の整数を頂点とする
+    :return: [[a1, b1], [a2, b2], ...]
+    """
+    import random
+    from collections import deque
+    tops = [i for i in range(start, node_num + start)]
+    tops = random.sample(tops, node_num)
+    re = []
+    pointer = 0
+    dq = deque([tops[pointer]])
+    while dq:
+        now = dq.popleft()
+        tmp = random.randint(1, max_child)
+        for i in range(tmp):
+            pointer += 1
+            if pointer >= node_num:
+                break
+            re.append([now, tops[pointer]])
+            dq.append(tops[pointer])
+        if pointer >= node_num:
+            break
+    return re

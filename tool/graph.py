@@ -58,3 +58,42 @@ class UnionFind:
     def __str__(self):
         return '\n'.join(
             '{}: {}'.format(r, self.members(r)) for r in self.roots())
+
+
+def minimum_load(tree_map, start, end):
+    """
+    グラフの start から end までの最短の道順を検索する
+    :param tree_map: [[], [1と行き来できるノード], [2と行き来できるノード], ...]
+    :param start:
+    :param end:
+    :return: node_list[start, a1, a2, ... , end]
+    """
+    from collections import deque
+    node_num = len(tree_map)
+    parent_map = [-1] * node_num
+    # make parent_map
+    dq = deque([[end, -1]])
+    while dq:
+        now, parent = dq.popleft()
+        parent_map[now] = parent
+        if now == start:
+            break
+        for t in tree_map[now]:
+            if t == parent:
+                continue
+            dq.append([t, now])
+    # make load
+    re = []
+    now = start
+    while True:
+        re.append(now)
+        if now == end:
+            break
+        now = parent_map[now]
+    return re
+
+
+if __name__ == '__main__':
+    import tool.testcase as tc
+
+    print(minimum_load([[], [2, 3], [1, 4], [1, 5], [2], [3]], 4, 4))
