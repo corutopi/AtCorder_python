@@ -60,6 +60,31 @@ class UnionFind:
             '{}: {}'.format(r, self.members(r)) for r in self.roots())
 
 
+def warshall_floyd(N, ABT, start=0):
+    """
+    ワーシャルフロイド法を実行する.
+    ノードは0始まりとする.
+    計算量 O(max(N**3, len(ABT)).
+    :param N: node num
+    :param ABT: double list [[nodeA, nodeB, cost], ...]
+    :param start: @todo 1始まりを許容できるようにすべきか検討
+    :return:
+    """
+    inf = float('inf')
+    re = [[0 if p == q else inf for p in range(N)] for q in range(N)]
+
+    for a, b, t in ABT:
+        re[a][b] = min(re[a][b], t)
+        re[b][a] = min(re[b][a], t)
+
+    for i in range(1, N + 1):
+        for j in range(1, N + 1):
+            for k in range(1, N + 1):
+                re[j][k] = min(re[j][k], re[j][i] + re[i][k])
+
+    return re
+
+
 def minimum_load(tree_map, start, end):
     """
     グラフの start から end までの最短の道順を検索する
