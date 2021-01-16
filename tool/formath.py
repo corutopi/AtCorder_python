@@ -169,3 +169,31 @@ def prime_numbers(m):
         for j in range(i * i, m + 1, i):
             first_prime[j] = i
     return re
+
+
+def hadamard_matrix(k):
+    """
+    アダマール行列を生成する.
+    シルベスターの生成法を採用.
+    参考:
+        https://ja.wikipedia.org/wiki/アダマール行列
+
+    :param k: 次元を表す指数. 2 ** k 次元のアダマール行列が生成される.
+    :return: 1, -1 で構成された2次元配列
+    """
+    if k == 0:
+        return [[1]]
+    if k == 1:
+        return [[1, 1],
+                [1, -1]]
+    H = hadamard_matrix(k - 1)
+    H_ = [[-i for i in h] for h in H]
+    HH = [H[i] + H[i] for i in range(len(H))] + \
+         [H[i] + H_[i] for i in range(len(H))]
+    return HH
+
+
+if __name__ == '__main__':
+    H = hadamard_matrix(3)
+    H[0][0] = 9
+    print(H)
