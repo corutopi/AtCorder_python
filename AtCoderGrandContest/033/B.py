@@ -1,83 +1,63 @@
-def solve():
-    H, W, N = map(int, input().split())
-    sr, sc = map(int, input().split())
-    S = list(input())
-    T = list(input())
+"""
+解説を参考に作成
+"""
+# import sys
+# sys.setrecursionlimit(10 ** 6)
+# import bisect
+# from collections import deque
+inf = float('inf')
+mod = 10 ** 9 + 7
+mod2 = 998244353
 
-    # to left
-    vec = 'L'
-    anv = 'R'
-    border = 1
-    winner = 'YES'
-    result = sc
-    addition = -1
-    out_mass_func = lambda x: x < border
-    for i in range(len(S)):
-        if S[i] == vec:
-            result += addition
-        if out_mass_func(result):
-            winner = 'NO'
-            break
-        if T[i] == anv and result < border:
-            result -= addition
-    # print('left', result)
-    # to right
-    if winner == 'YES':
-        vec = 'R'
-        anv = 'L'
-        border = W
-        winner = 'YES'
-        result = sc
-        addition = 1
-        out_mass_func = lambda x: x > border
-        for i in range(len(S)):
-            if S[i] == vec:
-                result += addition
-            if out_mass_func(result):
-                winner = 'NO'
-                break
-            if T[i] == anv and (1 < result):
-                result -= addition
-        # print('right', result)
-    # to top
-    if winner == 'YES':
-        vec = 'U'
-        anv = 'D'
-        border = 1
-        winner = 'YES'
-        result = sr
-        addition = -1
-        out_mass_func = lambda x: x < border
-        for i in range(len(S)):
-            if S[i] == vec:
-                result += addition
-            if out_mass_func(result):
-                winner = 'NO'
-                break
 
-            if T[i] == anv and (result < border):
-                result -= addition
-        # print('top', result)
-    # to bottom
-    if winner == 'YES':
-        vec = 'D'
-        anv = 'U'
-        border = H
-        winner = 'YES'
-        result = sr
-        addition = 1
-        out_mass_func = lambda x: x > border
-        for i in range(len(S)):
-            if S[i] == vec:
-                result += addition
-            if out_mass_func(result):
-                winner = 'NO'
-                break
-            if T[i] == anv and 1 < result:
-                result -= addition
-        # print('bottom', result)
-    print(winner)
+# from decorator import stop_watch
+#
+#
+# @stop_watch
+def solve(H, W, N, sr, sc, S, T):
+    l, r = 1, W
+    u, d = 1, H
+    S = [S[N - i - 1] for i in range(N)]
+    T = [T[N - i - 1] for i in range(N)]
+
+    if S[0] == 'L': l += 1
+    if S[0] == 'R': r -= 1
+    if S[0] == 'U': u += 1
+    if S[0] == 'D': d -= 1
+
+    for i in range(1, N):
+        if T[i] == 'L': r = min(W, r + 1)
+        if T[i] == 'R': l = max(1, l - 1)
+        if S[i] == 'L': l += 1
+        if S[i] == 'R': r -= 1
+        if r < l:
+            print('NO')
+            return
+        if T[i] == 'U': d = min(H, d + 1)
+        if T[i] == 'D': u = max(1, u - 1)
+        if S[i] == 'U': u += 1
+        if S[i] == 'D': d -= 1
+        if d < u:
+            print('NO')
+            return
+
+    ans = 'NO'
+    if l <= sc <= r and u <= sr <= d:
+        ans = 'YES'
+
+    print(ans)
 
 
 if __name__ == '__main__':
-    solve()
+    H, W, N = map(int, input().split())
+    sr, sc = map(int, input().split())
+    S = input()
+    T = input()
+    solve(H, W, N, sr, sc, S, T)
+
+    # # test
+    # from random import randint
+    # import string
+    # import tool.testcase as tt
+    # from tool.testcase import random_str, random_ints
+    # solve()
