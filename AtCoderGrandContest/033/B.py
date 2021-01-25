@@ -1,5 +1,6 @@
 """
-解説を参考に作成
+解説と以下を参考に作成
+https://drken1215.hatenablog.com/entry/2019/05/07/000200
 """
 # import sys
 # sys.setrecursionlimit(10 ** 6)
