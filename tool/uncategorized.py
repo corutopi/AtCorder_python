@@ -79,7 +79,7 @@ def liner_cross_point(a1, b1, c1, a2, b2, c2):
 
 
 def binary_search(ok, ng, solve):
-    """2分探索"""
+    """めぐる式2分探索"""
     while abs(ok - ng) > 1:
         mid = (ok + ng) // 2
         if solve(mid):
