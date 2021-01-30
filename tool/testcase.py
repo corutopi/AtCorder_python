@@ -55,6 +55,13 @@ def ppprint(itr_obj):
 
 
 def make_test_graph_data(node, edge, is_directed=False):
+    """
+
+    :param node:
+    :param edge:
+    :param is_directed: 組み合わせをソートするか否か
+    :return:
+    """
     import random
     count = 0
     re = []
