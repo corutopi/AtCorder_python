@@ -56,9 +56,9 @@ def ppprint(itr_obj):
 
 def make_test_graph_data(node, edge, is_directed=False):
     """
-
-    :param node:
-    :param edge:
+    単純グラフを返す. 連結とは限らない.
+    :param node: 頂点数
+    :param edge: 辺数
     :param is_directed: 組み合わせをソートするか否か
     :return:
     """
