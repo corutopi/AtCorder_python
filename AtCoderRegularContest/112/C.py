@@ -1,12 +1,18 @@
+"""
+解説を参考に作成.
+stackリソースの問題でwindows上だと制約 10 ** 5 での動作不可(再帰数最大の場合).
+"""
 import sys
-sys.setrecursionlimit(10 ** 7)
+sys.setrecursionlimit(10 ** 6)
 # import bisect
 # from collections import deque
 # import string
 from math import ceil, floor
+
 inf = float('inf')
 mod = 10 ** 9 + 7
 mod2 = 998244353
+
 
 # from decorator import stop_watch
 #
