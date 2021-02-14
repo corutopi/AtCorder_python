@@ -1,6 +1,7 @@
 """
 解説を参考に作成.
 stackリソースの問題でwindows上だと制約 10 ** 5 での動作不可(再帰数最大の場合).
+    Process finished with exit code -1073741571 (0xC00000FD)
 """
 import sys
 sys.setrecursionlimit(10 ** 6)
