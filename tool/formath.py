@@ -194,6 +194,4 @@ def hadamard_matrix(k):
 
 
 if __name__ == '__main__':
-    H = hadamard_matrix(3)
-    H[0][0] = 9
-    print(H)
+    print(prime_numbers(50))
