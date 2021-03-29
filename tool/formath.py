@@ -194,4 +194,4 @@ def hadamard_matrix(k):
 
 
 if __name__ == '__main__':
-    print(prime_numbers(50))
+    print(len(prime_numbers(10 ** 5)))
