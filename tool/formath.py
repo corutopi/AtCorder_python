@@ -142,6 +142,28 @@ def prime_factorization(x):
     return re
 
 
+def prime_factorization_dict(x):
+    """素因数分解
+    return such as
+        {f1: f1_num, f2: f2_num, ... , fn: fn_num}
+    """
+    import math
+    re = {}
+    i = 2
+    while x != 1:
+        if x % i == 0:
+            re.setdefault(i, 0)
+            re[i] += 1
+            x //= i
+        else:
+            i += 1
+            if i > math.sqrt(x):
+                re.setdefault(x, 0)
+                re[x] += 1
+                break
+    return re
+
+
 def lcm(a, b):
     """最小公倍数"""
     from math import gcd
@@ -194,4 +216,12 @@ def hadamard_matrix(k):
 
 
 if __name__ == '__main__':
-    print(len(prime_numbers(10 ** 5)))
+    for i in range(1, 300):
+        a = 1
+        for aa in prime_factorization(i):
+            a *= aa
+        b = 1
+        for k, v in prime_factorization_dict(i).items():
+            b *= k ** v
+        if a != b:
+            print(i, a, b)
