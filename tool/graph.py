@@ -13,6 +13,10 @@ class UnionFind:
     """
 
     def __init__(self, n):
+        """
+        make lonely group 0 to (n - 1).
+        :param n:
+        """
         self.n = n
         self.parents = [-1] * n
 
@@ -40,9 +44,20 @@ class UnionFind:
         return -self.parents[self.find(x)]
 
     def same(self, x, y):
+        """
+        return True if x is the same group as y else False.
+        :param x:
+        :param y:
+        :return:
+        """
         return self.find(x) == self.find(y)
 
     def members(self, x):
+        """
+        return members of the same group as x.
+        :param x:
+        :return:
+        """
         root = self.find(x)
         return [i for i in range(self.n) if self.find(i) == root]
 
