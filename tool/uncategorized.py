@@ -87,3 +87,22 @@ def binary_search(ok, ng, solve):
         else:
             ng = mid
     return ok
+
+
+class Coordinate:
+    """a class that manipulates 2D coordinates(x, y)
+    """
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def rotation_right(self, degree, center_x=0, center_y=0):
+        from math import sin, cos, radians
+        r = radians(degree)
+        R = [[cos(r), -sin(r)],
+             [sin(r), cos(r)]]
+        self.x, self.y = self.x - center_x, self.y - center_y
+        self.x, self.y = R[0][0] * self.x + R[0][1] * self.y, \
+                         R[1][0] * self.x + R[1][1] * self.y
+        self.x, self.y = self.x + center_x, self.y + center_y
+
