@@ -92,6 +92,7 @@ def binary_search(ok, ng, solve):
 class Coordinate:
     """a class that manipulates 2D coordinates(x, y)
     """
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -106,3 +107,8 @@ class Coordinate:
                          R[1][0] * self.x + R[1][1] * self.y
         self.x, self.y = self.x + center_x, self.y + center_y
 
+
+def declination(x, y, center_x=0, center_y=0):
+    """偏角"""
+    from math import atan2, degrees
+    return degrees(atan2(y - center_y, x - center_x)) % 360
