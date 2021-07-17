@@ -9,10 +9,12 @@ def liner_function(x1, y1, x2, y2):
     :return:
     """
     if x1 == x2:
+        # y軸に平行な直線の場合
         a = 1
         b = 0
         c = - x1
     elif y1 == y2:
+        # x軸に平行な直線の場合
         a = 0
         b = 1
         c = - y1
@@ -25,6 +27,9 @@ def liner_function(x1, y1, x2, y2):
 
 def vertical_line(a, b, c, x, y):
     """retrun a1, b1, c1 of 'a1x + b1y + c = 0' intersect 'ax + by + c = 0' vertically.
+
+    直線A(ax + by + c = 0)上の座標(x, y)を通り,
+    直線Aに対して垂直な直線B(a1x + b1x + c1 = 0)を表す a1, b1, c1 を返す.
 
     :param a:
     :param b:
@@ -112,3 +117,38 @@ def declination(x, y, center_x=0, center_y=0):
     """偏角"""
     from math import atan2, degrees
     return degrees(atan2(y - center_y, x - center_x)) % 360
+
+
+def circle_coordinate(r, angle, x=0, y=0, ):
+    """x, y を中心とする半径 r の円周上にあり, x 軸に水平な直線から angle 度だけ反時計回りに進んだ位置にある座標(m, n)を返す.
+    より具体的には以下の条件に当てはまる座標(m, n)を返す.
+        - 座標 x, y を中心座標とする半径 r の円周上にある.
+        - 中心座標と座標(x + r, y)を結ぶ線分Aと, 中心座標と座標(m,n)のを結ぶ線分Bのなす角度が angle となる.
+            - 角度は線分Aから反時計回り方向の角度を指定する.
+
+    :param x:
+    :param y:
+    :param r:
+    :param angle:
+    :return:
+    """
+    from math import sin, cos, radians
+    angle = angle % 360
+    return cos(radians(angle)) * r + x, sin(radians(angle)) * r + y
+
+
+def depression_angle_3d(x1, y1, z1, x2, y2, z2):
+    """z軸を垂直方向とする3次元立面で座標1から見た時の座標2の俯角を返す.
+    "俯角"を表すため, 座標2が座標1より上側にある場合, 角度は負になる.
+    """
+    from math import sqrt, degrees, atan
+    c = sqrt((x1 - x2) ** 2 +
+             (y1 - y2) ** 2 +
+             (z1 - z2) ** 2)
+    a = sqrt((z1 - z2) ** 2)
+    b = sqrt((c ** 2) - (a ** 2))
+    return degrees(atan(a / b)) * (1 if z1 >= z2 else -1)
+
+
+if __name__ == '__main__':
+    pass
