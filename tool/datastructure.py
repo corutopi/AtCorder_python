@@ -126,3 +126,173 @@ class SegTree:
             l >>= 1
             r >>= 1
         return res
+
+
+class BinaryTrie:
+    """
+    遅いので改良する。
+    数値の順序付き集合を管理するクラス。
+    特定の数値より大きく最小の値/小さく最大の値等を高速に求められる(ようにしたい)。
+
+    参考:
+    https://kazuma8128.hatenablog.com/entry/2018/05/06/022654
+    """
+    def __init__(self, b):
+        self.bit_size = b
+        self.b_node = BinaryNode()
+
+    def insert(self, x):
+        """
+        x を追加する
+        :param x:
+        :return:
+        """
+        self.b_node.add_node(x, self.bit_size)
+
+    def delete(self, x):
+        """
+        x を削除する
+        :param x:
+        :return:
+        """
+        self.b_node.del_node(x, self.bit_size)
+
+    def max_element(self):
+        pass
+
+    def min_element(self):
+        pass
+
+    def lower_bound(self, x):
+        """
+        x 以下で要素中最大の値の要素番号を返す。番号は1始まり。
+        :param x:
+        :return:
+        """
+        return self.b_node.lower_bound(x, self.bit_size)
+
+    def upper_bound(self, x):
+        """
+        x 以上で要素中最小の値の要素番号を返す。番号は1始まり。
+        :param x:
+        :return:
+        """
+        return self.b_node.num - self.b_node.upper_bound(x, self.bit_size) + 1
+
+    def kth_element(self, k):
+        """
+        k 番目の要素の値を返す。番号は1始まり。
+        :param k:
+        :return:
+        """
+        return self.b_node.kth_element(k, self.bit_size)
+
+
+class BinaryNode:
+    """
+    BinaryTrie 内で使用するサブクラス。
+    引数や戻り値の要素位置は1始まり。
+    """
+    def __init__(self):
+        self.num = 0
+        self.pointer = [None, None]
+
+    def __add_pointer(self, x):
+        self.pointer[x] = \
+            BinaryNode() if self.pointer[x] is None else self.pointer[x]
+
+    def __del_pointer(self, x):
+        self.pointer[x] = None
+
+    def add_node(self, x, b):
+        """
+        x をノードに追加する
+        :param x: 追加する値
+        :param b: 低から数えた時の深さ
+        :return:
+        """
+        if b == -1:
+            self.num += 1
+            return self.num
+        t = x >> b & 1
+        self.__add_pointer(t)
+        self.pointer[t].add_node(x, b - 1)
+        self.num += 1
+
+    def del_node(self, x, b):
+        """
+        x をノードから削除する
+        :param x: 削除する値
+        :param b: 低から数えた時の深さ
+        :return:
+        """
+        if b == -1:
+            self.num = 0
+            return self.num
+        t = x >> b & 1
+        if self.pointer[t].del_node(x, b - 1) == 0:
+            self.__del_pointer(t)
+        self.num -= 1
+        return self.num
+
+    def upper_bound(self, x, b):
+        """
+        x 以上の値の要素の個数
+        :param x: 検索値
+        :param b: 低から数えた時の深さ
+        :return:
+        """
+        if b == -1:
+            return 1
+        re = 0
+        if x >> b & 1 == 1:
+            if self.pointer[1] is not None:
+                re += self.pointer[1].upper_bound(x, b - 1)
+        else:
+            if self.pointer[0] is not None:
+                re += self.pointer[0].upper_bound(x, b - 1)
+            if self.pointer[1] is not None:
+                re += self.pointer[1].num
+        return re
+
+    def lower_bound(self, x, b):
+        """
+        x 以下の要素の個数
+        :param x: 検索値
+        :param b: 低から数えた時の深さ
+        :return:
+        """
+        if b == -1:
+            return 1
+        re = 0
+        if x >> b & 1 == 1:
+            if self.pointer[0] is not None:
+                re += self.pointer[0].num
+            if self.pointer[1] is not None:
+                re += self.pointer[1].lower_bound(x, b - 1)
+        else:
+            if self.pointer[0] is not None:
+                re += self.pointer[0].lower_bound(x, b - 1)
+        return re
+
+    def kth_element(self, k, b):
+        """
+        k番目の要素の値
+        :param k: 検索要素番号
+        :param b: 低から数えた時の深さ
+        :return:
+        """
+        if b == -1:
+            return 0
+        re = 0
+        if self.pointer[0] is not None:
+            if k <= self.pointer[0].num:
+                re += self.pointer[0].kth_element(k, b - 1)
+            else:
+                re += 1 << b
+                re += self.pointer[1].kth_element(k - self.pointer[0].num,
+                                                  b - 1)
+        else:
+            re += 1 << b
+            re += self.pointer[1].kth_element(k, b - 1)
+        return re
