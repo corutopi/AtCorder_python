@@ -30,7 +30,7 @@ def solve(N, T):
     print(sum(T) - re_ans)
 
 
-            # def solve2(N, T):
+# def solve2(N, T):
 #     ans = inf
 #     for i in range(2 ** N):
 #         oben_a, oben_b = 0, 0
