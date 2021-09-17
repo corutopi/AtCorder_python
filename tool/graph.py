@@ -134,6 +134,43 @@ def minimum_load(tree_map, start, end):
     return re
 
 
+def have_close_road(graph):
+    """
+    有向グラフに閉路が存在するかを判定する.
+    - 終点のないノードを親ノードとする.
+    - 親ノードをグラフから削除する.
+      この操作によって新たに親ノードができた場合はその親ノードも削除する.
+      これを親ノードがなくなるまで繰り返す.
+    - ノードがすべて削除されれば閉路は存在しない(残っていれば存在する).
+    todo: テストを作っておきたい
+
+    :param graph: ノードiを始点とする枝jの終点をまとめた2重list graph[i][j]
+    :return: 閉路が存在する場合 Treu, それ以外は False.
+    """
+    node_num = len(graph)
+    parent_num = [0] * node_num
+    parent_flg = [1] * node_num
+    for g in graph:
+        for n in g:
+            parent_num[n] += 1
+            parent_flg[n] = 0
+
+    remain_flg = [1] * node_num
+    for i in range(node_num):
+        if parent_flg[i] == 0:
+            continue
+        stack = [i]
+        while stack:
+            now = stack.pop(-1)
+            remain_flg[now] = 0
+            for j in graph[now]:
+                parent_num[j] -= 1
+                if parent_num[j] == 0:
+                    stack.append(j)
+
+    return False if sum(remain_flg) == 0 else True
+
+
 if __name__ == '__main__':
     import tool.testcase as tc
 
