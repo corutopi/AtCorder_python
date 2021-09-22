@@ -175,3 +175,16 @@ if __name__ == '__main__':
     import tool.testcase as tc
 
     print(minimum_load([[], [2, 3], [1, 4], [1, 5], [2], [3]], 4, 4))
+
+    print(have_close_road([[],
+                           [2, 3],
+                           [4],
+                           [4],
+                           []]))
+    print(have_close_road([[],
+                           [2, 3],
+                           [4],
+                           [4],
+                           [3]]))
+    print(
+        have_close_road([[]] + [[i + 1] for i in range(1, 10 ** 5 * 2)] + [[]]))
