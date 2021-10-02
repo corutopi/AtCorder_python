@@ -22,6 +22,12 @@ class UnionFind:
         self.parents = [-1] * n
 
     def find(self, x):
+        """
+        return the number of representatives of the group to which x belongs.
+
+        :param x:
+        :return:
+        """
         if self.parents[x] < 0:
             return x
         else:
@@ -29,6 +35,13 @@ class UnionFind:
             return self.parents[x]
 
     def union(self, x, y):
+        """
+        join the group to which x belongs and the group to which y belongs.
+
+        :param x:
+        :param y:
+        :return:
+        """
         x = self.find(x)
         y = self.find(y)
 
@@ -42,11 +55,18 @@ class UnionFind:
         self.parents[y] = x
 
     def size(self, x):
+        """
+        return member num of group to which x belongs.
+
+        :param x:
+        :return:
+        """
         return -self.parents[self.find(x)]
 
     def same(self, x, y):
         """
         return True if x is the same group as y else False.
+
         :param x:
         :param y:
         :return:
@@ -56,6 +76,7 @@ class UnionFind:
     def members(self, x):
         """
         return members of the same group as x.
+
         :param x:
         :return:
         """
