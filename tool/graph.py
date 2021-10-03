@@ -16,6 +16,7 @@ class UnionFind:
     def __init__(self, n):
         """
         make lonely group 0 to (n - 1).
+
         :param n:
         """
         self.n = n
