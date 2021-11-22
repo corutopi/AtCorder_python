@@ -150,5 +150,59 @@ def depression_angle_3d(x1, y1, z1, x2, y2, z2):
     return degrees(atan(a / b)) * (1 if z1 >= z2 else -1)
 
 
+def slide_minimum(l, k):
+    """スライド最小値のlistを返す
+
+    :param l: list
+    :param k: min(l[i] ... l[i + k])
+    :return:
+    """
+    from collections import deque
+    dq = deque([])
+    for i in range(k):
+        while dq and l[dq[-1]] > l[i]:
+            dq.pop()
+        dq.append(i)
+    re = []
+    for i in range(len(l)):
+        if i + k < len(l):
+            while dq and l[dq[-1]] > l[i + k]:
+                dq.pop()
+            dq.append(i + k)
+        if dq[0] == i - 1:
+            dq.popleft()
+        re.append(l[dq[0]])
+    return re
+
+
+def slide_maximum(l, k):
+    """スライド最大値のlistを返す1.
+    O(len(l))
+
+    :param l: list
+    :param k: min(l[i] ... l[i + k])
+    :return:
+    """
+    from collections import deque
+    dq = deque([])
+    for i in range(k):
+        while dq and l[dq[-1]] < l[i]:
+            dq.pop()
+        dq.append(i)
+    re = []
+    for i in range(len(l)):
+        if i + k < len(l):
+            while dq and l[dq[-1]] < l[i + k]:
+                dq.pop()
+            dq.append(i + k)
+        if dq[0] == i - 1:
+            dq.popleft()
+        re.append(l[dq[0]])
+    return re
+
+
 if __name__ == '__main__':
-    pass
+    print(slide_minimum([9, 8, 7, 6, 5, 4, 3, 2, 1], 1))
+    print(slide_minimum([1, 2, 3, 4, 5, 6, 7, 8, 9], 2))
+    print(slide_maximum([9, 8, 7, 6, 5, 4, 3, 2, 1], 1))
+    print(slide_maximum([1, 2, 3, 4, 5, 6, 7, 8, 9], 2))

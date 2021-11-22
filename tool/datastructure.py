@@ -53,6 +53,11 @@ class BinaryIndexedTree:
         return self.sum(r) - self.sum(l - 1)
 
 
+class SegTree2:
+    # todo 作りたい
+    pass
+
+
 class SegTree:
     """
     セグメントツリー
@@ -137,6 +142,7 @@ class BinaryTrie:
     参考:
     https://kazuma8128.hatenablog.com/entry/2018/05/06/022654
     """
+
     def __init__(self, b):
         self.bit_size = b
         self.b_node = BinaryNode()
@@ -193,6 +199,7 @@ class BinaryNode:
     BinaryTrie 内で使用するサブクラス。
     引数や戻り値の要素位置は1始まり。
     """
+
     def __init__(self):
         self.num = 0
         self.pointer = [None, None]
