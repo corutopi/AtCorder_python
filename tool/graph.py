@@ -19,8 +19,9 @@ class UnionFind:
 
         :param n:
         """
-        self.n = n
-        self.parents = [-1] * n
+        self._n = n
+        self._parents = [-1] * n
+        self._group_count = n
 
     def find(self, x):
         """
@@ -29,11 +30,11 @@ class UnionFind:
         :param x:
         :return:
         """
-        if self.parents[x] < 0:
+        if self._parents[x] < 0:
             return x
         else:
-            self.parents[x] = self.find(self.parents[x])
-            return self.parents[x]
+            self._parents[x] = self.find(self._parents[x])
+            return self._parents[x]
 
     def union(self, x, y):
         """
@@ -49,11 +50,12 @@ class UnionFind:
         if x == y:
             return
 
-        if self.parents[x] > self.parents[y]:
+        if self._parents[x] > self._parents[y]:
             x, y = y, x
 
-        self.parents[x] += self.parents[y]
-        self.parents[y] = x
+        self._parents[x] += self._parents[y]
+        self._parents[y] = x
+        self._group_count -= 1
 
     def size(self, x):
         """
@@ -62,7 +64,7 @@ class UnionFind:
         :param x:
         :return:
         """
-        return -self.parents[self.find(x)]
+        return -self._parents[self.find(x)]
 
     def same(self, x, y):
         """
@@ -82,13 +84,13 @@ class UnionFind:
         :return:
         """
         root = self.find(x)
-        return [i for i in range(self.n) if self.find(i) == root]
+        return [i for i in range(self._n) if self.find(i) == root]
 
     def roots(self):
-        return [i for i, x in enumerate(self.parents) if x < 0]
+        return [i for i, x in enumerate(self._parents) if x < 0]
 
     def group_count(self):
-        return len(self.roots())
+        return self._group_count
 
     def all_group_members(self):
         return {r: self.members(r) for r in self.roots()}

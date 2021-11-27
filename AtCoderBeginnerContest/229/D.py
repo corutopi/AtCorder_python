@@ -1,3 +1,4 @@
+# 尺取り法
 # import sys
 # sys.setrecursionlimit(10 ** 6)
 # import bisect
