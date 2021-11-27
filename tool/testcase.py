@@ -60,7 +60,7 @@ def make_test_graph_data(node, edge, is_directed=False):
     :param node: 頂点数
     :param edge: 辺数
     :param is_directed: 組み合わせをソートするか否か
-    :return:
+    :return: 1~node を頂点とする辺[i ,j]の二次元list
     """
     import random
     count = 0

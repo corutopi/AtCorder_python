@@ -260,4 +260,4 @@ if __name__ == '__main__':
     l = [[i * j for j in range(10)] for i in range(10)]
     [print(l2) for l2 in l]
     print('--------')
-    [print(sm) for sm in slide_maximum_2d(l, 2,3)]
+    [print(sm) for sm in slide_maximum_2d(l, 2, 3)]
