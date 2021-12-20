@@ -94,6 +94,17 @@ def binary_search(ok, ng, solve):
     return ok
 
 
+def binary_search_double(ok, ng, solve, cnt=100):
+    """めぐる式2分探索"""
+    for _ in range(cnt):
+        mid = (ok + ng) / 2
+        if solve(mid):
+            ok = mid
+        else:
+            ng = mid
+    return ok
+
+
 class Coordinate:
     """a class that manipulates 2D coordinates(x, y)
     """
