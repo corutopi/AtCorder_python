@@ -1,0 +1,1 @@
+K,N=int(input()),50;i=N-K%N;s=K//N+i-1;print(N,' '.join([str(s)]*i+[str(s+N+1)]*(N-i)),sep='\r\n')
