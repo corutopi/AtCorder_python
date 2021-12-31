@@ -53,11 +53,6 @@ class BinaryIndexedTree:
         return self.sum(r) - self.sum(l - 1)
 
 
-class SegTree2:
-    # todo 作りたい
-    pass
-
-
 class SegTree:
     """
     セグメントツリー
