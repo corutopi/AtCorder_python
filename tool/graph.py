@@ -1,12 +1,3 @@
-"""
-todo:
-    ダイクストラ法のスニペット
-    ワーシャルフロイド法のスニペット
-    ベルマンフォード法のスニペット
-    有向グラフに閉路が含まれることを検出するスニペット(できれば再帰を使わないで)
-"""
-
-
 class UnionFind:
     """
     下記から拝借
@@ -100,28 +91,88 @@ class UnionFind:
             '{}: {}'.format(r, self.members(r)) for r in self.roots())
 
 
-def warshall_floyd(N, ABT, start=0):
+def warshall_floyd(N, ABC):
     """
-    ワーシャルフロイド法を実行する.
+    ワーシャルフロイド法の実行結果を返す.
     ノードは0始まりとする.
     計算量 O(max(N**3, len(ABT)).
     :param N: node num
-    :param ABT: double list [[nodeA, nodeB, cost], ...]
-    :param start: @todo 1始まりを許容できるようにすべきか検討
+    :param ABC: double list [[nodeA, nodeB, cost], ...]
     :return:
     """
     inf = float('inf')
     re = [[0 if p == q else inf for p in range(N)] for q in range(N)]
 
-    for a, b, t in ABT:
-        re[a][b] = min(re[a][b], t)
-        re[b][a] = min(re[b][a], t)
+    for a, b, c in ABC:
+        re[a][b] = min(re[a][b], c)
+        re[b][a] = min(re[b][a], c)
 
     for i in range(1, N + 1):
         for j in range(1, N + 1):
             for k in range(1, N + 1):
                 re[j][k] = min(re[j][k], re[j][i] + re[i][k])
 
+    return re
+
+
+def bellman_ford(N, ABC, start=0, isdirected=True):
+    """
+    ベルマンフォード法の実行結果を返す.
+    ノードは0始まりとする.
+    :param N: node num
+    :param ABC: double list [[nodeA, nodeB, cost], ...]
+    :param start: start node num
+    :param isdirected: 'True' mean edge have directed
+    :return: list [min cost of 'from start to 0', ...]
+    """
+    from collections import deque
+
+    inf = float('inf')
+    graph_map = [[] for _ in range(N)]
+    re = [inf] * N
+    for a, b, t in ABC:
+        graph_map[a].append([b, t])
+        if not isdirected:
+            graph_map[b].append([a, t])
+    re[start] = 0
+    for _ in range(N - 1):
+        dq = deque([start])
+        while dq:
+            now = dq.popleft()
+            for n, t in graph_map[now]:
+                if re[now] + t < re[n]:
+                    re[n] = re[now] + t
+                    dq.append(n)
+    return re
+
+
+def dijkstra(N, ABC, start=0):
+    """
+    ダイクストラ法の実行結果を返す.
+    ノードは0始まりとする. 辺は有向なものとする.
+    :param N: node num
+    :param ABC: double list [[nodeA, nodeB, cost], ...]
+    :param start: start node num
+    :return: list [min cost of 'from start to 0', ...]
+    """
+    from heapq import heappush, heappop
+
+    inf = float('inf')
+    graph_map = [[] for _ in range(N)]
+    re = [inf] * N
+    for a, b, c in ABC:
+        graph_map[a].append([b, c])
+    re[start] = 0
+    visited = [0] * N
+    hq = [[0, start]]
+    while hq:
+        cost, now = heappop(hq)
+        if visited[now]: continue
+        visited[now] = 1
+        for nxt, c in graph_map[now]:
+            if re[now] + c < re[nxt]:
+                re[nxt] = re[now] + c
+                heappush(hq, [re[nxt], nxt])
     return re
 
 
@@ -168,7 +219,7 @@ def have_close_road(graph):
     - ノードがすべて削除されれば閉路は存在しない(残っていれば存在する).
     todo: テストを作っておきたい
 
-    :param graph: ノードiを始点とする枝jの終点をまとめた2重list graph[i][j]
+    :param graph: ノードiを始点とする枝jをまとめた2重list graph[i][j]
     :return: 閉路が存在する場合 Treu, それ以外は False.
     """
     node_num = len(graph)
@@ -196,19 +247,13 @@ def have_close_road(graph):
 
 
 if __name__ == '__main__':
-    import tool.testcase as tc
-
-    print(minimum_load([[], [2, 3], [1, 4], [1, 5], [2], [3]], 4, 4))
-
-    print(have_close_road([[],
-                           [2, 3],
-                           [4],
-                           [4],
-                           []]))
-    print(have_close_road([[],
-                           [2, 3],
-                           [4],
-                           [4],
-                           [3]]))
-    print(
-        have_close_road([[]] + [[i + 1] for i in range(1, 10 ** 5 * 2)] + [[]]))
+    N = 6
+    ABT = [[0, 1, 2],
+           [0, 3, 4],
+           [1, 2, 3],
+           [2, 3, -2],
+           [2, 5, 2],
+           [3, 4, 2],
+           [3, 5, 4],
+           [4, 5, 1]]
+    print(bellman_ford(N, ABT))
