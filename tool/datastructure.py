@@ -12,6 +12,8 @@ class BinaryIndexedTree:
     配列データは1始まりとして計算.
     長さ n + 1 (0 ~ n) の配列にデータを持ち, データ内の対象要素を l ~ r とすると, 配列の r 番目が格納先となる.
     また対象要素の数は r の LSB(Least Significant Bit) に一致する.
+
+    転倒数の計算にも使える.
     """
 
     def __init__(self, n):
