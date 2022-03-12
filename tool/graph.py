@@ -107,9 +107,9 @@ def warshall_floyd(N, ABC):
         re[a][b] = min(re[a][b], c)
         re[b][a] = min(re[b][a], c)
 
-    for i in range(1, N + 1):
-        for j in range(1, N + 1):
-            for k in range(1, N + 1):
+    for i in range(N):
+        for j in range(N):
+            for k in range(N):
                 re[j][k] = min(re[j][k], re[j][i] + re[i][k])
 
     return re
