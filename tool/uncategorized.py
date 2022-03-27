@@ -263,12 +263,25 @@ def slide_maximum_2d(l, h, w):
     return re
 
 
+def coordinate_compression(x, start=0):
+    """整数のリストを座標圧縮したものを返す.デフォルトの最小値0.
+
+    :param x: integer list
+    :param start:
+    :return:
+    """
+    xd = {v: i + start for i, v in enumerate(sorted(x))}
+    return list(map(lambda d: xd[d], x))
+
+
 if __name__ == '__main__':
     # print(slide_minimum([9, 8, 7, 6, 5, 4, 3, 2, 1], 1))
     # print(slide_minimum([1, 2, 3, 4, 5, 6, 7, 8, 9], 2))
     # print(slide_maximum([9, 8, 7, 6, 5, 4, 3, 2, 1], 1))
     # print(slide_maximum([1, 2, 3, 4, 5, 6, 7, 8, 9], 2))
-    l = [[i * j for j in range(10)] for i in range(10)]
-    [print(l2) for l2 in l]
-    print('--------')
-    [print(sm) for sm in slide_maximum_2d(l, 2, 3)]
+    # l = [[i * j for j in range(10)] for i in range(10)]
+    # [print(l2) for l2 in l]
+    # print('--------')
+    # [print(sm) for sm in slide_maximum_2d(l, 2, 3)]
+    l = [1, 3, 5, 2, 7, 90, 32]
+    print(coordinate_compression(l, 1))
