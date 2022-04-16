@@ -25,6 +25,49 @@ def liner_function(x1, y1, x2, y2):
     return a, b, c
 
 
+def liner_function_integer(x1, y1, x2, y2):
+    """return a, b, c of ax + by + c = 0.
+    a, b and c are relatively prime integers. a >= 0.
+    x1 != x2 or y1 != y2
+    :param x1: meet y1 = ax1 + b
+    :param y1:
+    :param x2: meet y2 = ax2 + b
+    :param y2:
+    :return:
+    """
+
+    def gcd(a, b):
+        """最大公約数"""
+        a, b = (a, b) if a >= b else (b, a)
+        if b == 0:
+            return a
+        return gcd(b, a % b)
+
+    if x1 == x2:
+        # y軸に平行な直線の場合
+        a = 1
+        b = 0
+        c = - x1
+    elif y1 == y2:
+        # x軸に平行な直線の場合
+        a = 0
+        b = 1
+        c = - y1
+    else:
+        b = 1 * (x1 - x2)
+        a = - (y1 - y2)
+        c = - a * x1 - b * y1
+        g = gcd(gcd(abs(a), abs(b)), abs(c))
+        b //= g
+        a //= g
+        c //= g
+        code = 1 if a > 0 else -1
+        b *= code
+        a *= code
+        c *= code
+    return a, b, c
+
+
 def vertical_line(a, b, c, x, y):
     """retrun a1, b1, c1 of 'a1x + b1y + c = 0' intersect 'ax + by + c = 0' vertically.
 
@@ -285,3 +328,4 @@ if __name__ == '__main__':
     # [print(sm) for sm in slide_maximum_2d(l, 2, 3)]
     l = [1, 3, 5, 2, 7, 90, 32]
     print(coordinate_compression(l, 1))
+    print(liner_function_integer(1, 3, 4, 6))
