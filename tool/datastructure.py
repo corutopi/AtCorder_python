@@ -116,18 +116,19 @@ class SegTree:
         :param r:
         :return:
         """
-        res = self.default
+        res_l = self.default
+        res_r = self.default
         l += self.num
         r += self.num
         while l < r:
             if l & 1:
-                res = self.func(res, self.tree[l])
+                res_l = self.func(res_l, self.tree[l])
                 l += 1
             if r & 1:
-                res = self.func(res, self.tree[r - 1])
+                res_r = self.func(self.tree[r - 1], res_r)
             l >>= 1
             r >>= 1
-        return res
+        return self.func(res_l, res_r)
 
 
 class BinaryTrie:
