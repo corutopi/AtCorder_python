@@ -317,6 +317,13 @@ def coordinate_compression(x, start=0):
     return list(map(lambda d: xd[d], x))
 
 
+def triangle_area(x1, y1, x2, y2, x3, y3):
+    """座標(x1, y1), (x2, y2), (x3, y3) で表される三角形の面積.
+    https://mathwords.net/x1y2hikux2y1
+    """
+    return abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2
+
+
 if __name__ == '__main__':
     # print(slide_minimum([9, 8, 7, 6, 5, 4, 3, 2, 1], 1))
     # print(slide_minimum([1, 2, 3, 4, 5, 6, 7, 8, 9], 2))
@@ -326,6 +333,4 @@ if __name__ == '__main__':
     # [print(l2) for l2 in l]
     # print('--------')
     # [print(sm) for sm in slide_maximum_2d(l, 2, 3)]
-    l = [1, 3, 5, 2, 7, 90, 32]
-    print(coordinate_compression(l, 1))
-    print(liner_function_integer(1, 3, 4, 6))
+    print(area_triangle(1, -1, 1, 2, -2, -1))
