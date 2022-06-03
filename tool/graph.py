@@ -111,7 +111,6 @@ def warshall_floyd(N, ABC):
         for j in range(N):
             for k in range(N):
                 re[j][k] = min(re[j][k], re[j][i] + re[i][k])
-
     return re
 
 
@@ -247,13 +246,21 @@ def have_close_road(graph):
 
 
 if __name__ == '__main__':
-    N = 6
-    ABT = [[0, 1, 2],
-           [0, 3, 4],
-           [1, 2, 3],
-           [2, 3, -2],
-           [2, 5, 2],
-           [3, 4, 2],
-           [3, 5, 4],
-           [4, 5, 1]]
-    print(bellman_ford(N, ABT))
+    from random import randint
+    # # warshall_floyd test
+    # while True:
+    #     N = 10
+    #     ABC = [[randint(0, N - 1), randint(0, N - 1), randint(1, 1000)]
+    #            for _ in range(1000)]
+    #     xx = warshall_floyd(N, ABC)
+    #     yy = warshall_floyd_new(N, ABC)
+    #     flg = False
+    #     for i, j in ((i, j) for i in range(len(xx)) for j in range(len(xx))):
+    #         if xx[i][j] != yy[i][j]:
+    #             flg = True
+    #             break
+    #     if flg:
+    #         print(xx)
+    #         print(yy)
+    #         break
+
