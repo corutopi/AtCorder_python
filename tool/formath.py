@@ -216,12 +216,13 @@ def hadamard_matrix(k):
 
 
 if __name__ == '__main__':
-    for i in range(1, 300):
-        a = 1
-        for aa in prime_factorization(i):
-            a *= aa
-        b = 1
-        for k, v in prime_factorization_dict(i).items():
-            b *= k ** v
-        if a != b:
-            print(i, a, b)
+    # for i in range(1, 300):
+    #     a = 1
+    #     for aa in prime_factorization(i):
+    #         a *= aa
+    #     b = 1
+    #     for k, v in prime_factorization_dict(i).items():
+    #         b *= k ** v
+    #     if a != b:
+    #         print(i, a, b)
+    print(prime_factorization_dict(2))
