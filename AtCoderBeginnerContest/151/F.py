@@ -15,6 +15,12 @@ from math import ceil, floor
 inf = float('inf')
 mod = 10 ** 9 + 7
 mod2 = 998244353
+
+"""
+a <= b -> a <= b + EPS
+a < b  -> a < b - EPS
+a == b -> abs(a - b) < EPS
+"""
 EPS = 10 ** -7
 
 
