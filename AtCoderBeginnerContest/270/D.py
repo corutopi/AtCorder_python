@@ -29,29 +29,29 @@ def solve(N, K, A):
     TAKAHASHI, AOKI = 0, 1
     dp = [[0, 0]] + [[-1, -1] for _ in range(N)]
 
-    def memo(storn_num, player):
+    def memo(stone_num, player):
         if player == TAKAHASHI:
-            aite = AOKI
+            opponent = AOKI
             result = -1
         else:
-            aite = TAKAHASHI
+            opponent = TAKAHASHI
             result = inf
 
         for a in A:
-            if storn_num < a: continue
-            if dp[storn_num - a][aite] == -1:
-                memo(storn_num - a, aite)
+            if stone_num < a: continue
+            if dp[stone_num - a][opponent] == -1:
+                memo(stone_num - a, opponent)
 
             if player == TAKAHASHI:
-                result = max(result, dp[storn_num - a][aite] + a)
+                result = max(result, dp[stone_num - a][opponent] + a)
             else:
-                result = min(result, dp[storn_num - a][aite])
+                result = min(result, dp[stone_num - a][opponent])
 
-        dp[storn_num][player] = result
+        dp[stone_num][player] = result
 
     memo(N, TAKAHASHI)
 
-    print(dp[-1][0])
+    print(dp[N][TAKAHASHI])
 
 
 if __name__ == '__main__':
